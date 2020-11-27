@@ -1,29 +1,61 @@
-import React, {Component} from 'react';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
-import ItemList from './components/ItemList';
 
-class App extends Component {
+// Importing components
+import Dashboard from './components/pages/Dashboard';
+import Home from './components/pages/Home';
+import Nav from './components/header/Nav';
+import Footer from './components/footer/Footer';
+import Login from './components/pages/Login';
+import Register from './components/pages/Register';
+import ScrollToTop from './js/ScrollToTop';
 
-  state = {
-    items: []
-  }
+const App = () => {
 
-  componentDidMount() {
-    fetch('http://localhost:9090/inventory/items')
-    .then(res => res.json())
-    .then((data) => {
-      this.setState({ items: data })
-    })
-    .catch(console.log)
-  }
+	const [user, setUser] = useState(null);
+	
+	useEffect (() => {
+        fetch('http://localhost:9090/inventory/users/user', {
+        mode: 'cors',
+		method: 'GET',
+		headers: new Headers({
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'Accept': 'application/json',
+            }) 
+		})
+		.then(response => {
+			if (response.ok) {
+				return response.json();
+			}
+			else {
+				return null;
+			}
+		})
+		.then(response => {
+			if (response != null) {
+				setUser(response);
+			}
+		})
+    }, [])
 
-  render () {
-    return (
-      <div className="App">
-        <ItemList items={this.state.items}/>
-      </div>
-    );
-  }
+	return (
+		<Router>
+			<div>
+				<Nav user={user} setUser={setUser}/>
+					<ScrollToTop>
+							<Switch>
+								<Route exact path="/" component={() => <Home user={user}/>}/>
+								<Route exact path="/dashboard" component={() => <Dashboard user={user}/>} />
+								<Route exact path="/login" component={() => <Login setUser={setUser}/>} />
+								<Route exact path="/register" component={Register} />
+								<Redirect to="/" />
+							</Switch>
+					</ScrollToTop>
+				<Footer/>
+			</div>
+		</Router>
+	)
 }
 
 export default App;

@@ -1,11 +1,11 @@
 import React from 'react';
 
 const Item = (props) => (
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{props.name}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{props.id}</h6>
-            <p class="card-text">Quantity: {props.quantity}</p>
+    <div className="card">
+        <div className="card-body">
+            <h5 className="card-title">{props.name}</h5>
+            <h6 className="card-subtitle mb-2 text-muted">{props.id}</h6>
+            <p className="card-text">Quantity: {props.quantity}</p>
         </div>
     </div>
 );

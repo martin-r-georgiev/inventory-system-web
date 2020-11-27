@@ -1,0 +1,134 @@
+
+/* General */
+
+/* Used to align inline-block elements */
+.text-center {
+    text-align: center;
+}
+
+.inline {
+    display: inline;
+}
+
+
+/* Navigation */
+
+nav {
+    background-color: #141414;
+    padding: 0.5em;
+}
+
+.nav-link {
+    color: #ffffff;
+}
+
+.nav-link:hover {
+    color: #aaaaaa;
+}
+
+/* General Page Attributes */
+
+.page-wrapper {
+    min-height: 100vh;
+}
+
+/* Buttons */
+
+.btn-outline-theme {
+    border-color: #141414;
+}
+
+.btn-outline-theme:hover {
+    background-color: #141414;
+}
+
+/* Home page */
+
+.home-container {
+    display: block;
+    background-color: #efefef;
+}
+
+.home-logo {
+    margin-top: 2em;
+    width: 60%;
+}
+
+/* Footer */
+footer {
+    color: #ffffff;
+    background-color: #141414;
+    padding: 0.5em;
+}
+
+/* Login & Register */
+
+input {
+    outline: none;
+    margin: 0;
+    border: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    width: 100%;
+    font-size: 14px;
+    font-family: inherit;
+  }
+
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input--style-3 {
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 5px 0px 5px 5px;
+    font-size: 16px;
+    color: #333333;
+    background: transparent;
+}
+
+.input--style-3::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #aaaaaa;
+}
+  
+.input--style-3:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #aaaaaa;
+    opacity: 1;
+}
+  
+.input--style-3::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #aaaaaa;
+    opacity: 1;
+}
+  
+.input--style-3:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #aaaaaa;
+}
+  
+.input--style-3:-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: #aaaaaa;
+}
+
+/* Mobile device support */
+
+@media only screen and (max-width: 600px) {
+    .home-logo  {
+        width: 90% !important;
+    }
+}
+
+
+
+/* Bootstrap Override */
+
+.jumbotron {
+    background-color: #efefef !important;
+}
+
