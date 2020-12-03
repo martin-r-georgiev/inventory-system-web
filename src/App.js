@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 
@@ -15,14 +15,14 @@ const App = () => {
 
 	const [user, setUser] = useState(null);
 	
-	useEffect (() => {
-        fetch('http://localhost:9090/inventory/users/user', {
-        mode: 'cors',
+	const authenticateUser = useCallback(() => {
+		fetch('http://localhost:9090/inventory/users/user', {
+		mode: 'cors',
 		method: 'GET',
 		headers: new Headers({
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Accept': 'application/json',
-            }) 
+			'Authorization': `Bearer ${localStorage.getItem('token')}`,
+			'Accept': 'application/json',
+			}) 
 		})
 		.then(response => {
 			if (response.ok) {
@@ -37,7 +37,13 @@ const App = () => {
 				setUser(response);
 			}
 		})
-    }, [])
+	},[]);
+
+	useEffect (() => {
+		if(!user) {
+			authenticateUser();
+		}
+    }, [user])
 
 	return (
 		<Router>

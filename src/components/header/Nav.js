@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -10,28 +10,16 @@ import Logo from '../../assets/images/squire-logo-inverted.webp';
 
 const Nav = ({user, setUser}) => {
 
-    let nav_buttons;
+    let navButtons;
 
-    const handleLogout = () => {
+    const handleLogout = useCallback(() => {
         setUser(null);
         localStorage.clear();
-    }
+    }, []);
 
-    if (user != null) {
-        console.log("I'm logged in!");
-        nav_buttons = (
-            <ul className="nav navbar-nav ml-auto">
-                <li className="nav-item ml-auto">
-                    <Link className="nav-link" to='/dashboard'>Dashboard</Link>
-                </li>
-                <li className="nav-item ml-auto">
-                    <Link className="nav-link" onClick={handleLogout} to='/'>Log out</Link>
-                </li>
-            </ul>
-        )
-    } else {
+    if (user == null) {
         console.log("I'm not logged in!");
-        nav_buttons = (
+        navButtons = (
             <ul className="nav navbar-nav ml-auto">
                 <li className="nav-item ml-auto">
                     <Link className="nav-link" to='/login'>Log in</Link>
@@ -40,7 +28,19 @@ const Nav = ({user, setUser}) => {
                     <Link className="nav-link" to='/register'>Register</Link>
                 </li>
             </ul>
-        )
+        );   
+    } else {
+        console.log("I'm logged in!");
+        navButtons = (
+            <ul className="nav navbar-nav ml-auto">
+                <li className="nav-item ml-auto">
+                    <Link className="nav-link" to='/dashboard'>Dashboard</Link>
+                </li>
+                <li className="nav-item ml-auto">
+                    <Link className="nav-link" onClick={handleLogout} to='/'>Log out</Link>
+                </li>
+            </ul>
+        );
     }
 
     return (
@@ -52,7 +52,7 @@ const Nav = ({user, setUser}) => {
             </span>
         </button>
         <div className="navbar-collapse collapse show" id="navbarCollapse">
-            {nav_buttons}
+            {navButtons}
         </div>
     </nav>
     )
