@@ -1,16 +1,22 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
+import { isAuthenticated } from './authentication/auth.js';
 
-export const ProtectedRoute = ({component: Component, ...rest}) => {
+const ProtectedRoute = ({component: Component, user, ...rest}) => {
+    let authenticated = isAuthenticated(user);
+    
     return (
         <Route 
             {...rest}
             render={props => {
-            
-                if (!auth.isAuthenticated()) return auth.login();
-                
-                return <Component auth={auth} {...props} />;
+                if (authenticated) {
+                    return (<Component auth={authenticated} {...props} />);
+                } else {
+                    return (<Redirect to="/"/>);
+                }  
             }}
         />
     )
-}
+};
+
+export default ProtectedRoute;

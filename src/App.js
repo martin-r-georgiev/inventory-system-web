@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import './App.css';
 
 // Importing components
+import ProtectedRoute from './ProtectedRoute';
+
 import Dashboard from './components/pages/Dashboard';
 import Home from './components/pages/Home';
 import Nav from './components/header/Nav';
@@ -35,15 +37,19 @@ const App = () => {
 		.then(response => {
 			if (response != null) {
 				setUser(response);
+				localStorage.setItem("warehouseId", response.warehouseId);
 			}
 		})
 	},[]);
+
+	console.log(localStorage.getItem("token"));
+	console.log(user);
 
 	useEffect (() => {
 		if(!user) {
 			authenticateUser();
 		}
-    }, [user])
+    }, [user, authenticateUser])
 
 	return (
 		<Router>
@@ -52,7 +58,7 @@ const App = () => {
 					<ScrollToTop>
 							<Switch>
 								<Route exact path="/" component={() => <Home user={user}/>}/>
-								<Route exact path="/dashboard" component={() => <Dashboard user={user}/>} />
+								<ProtectedRoute exact user={user} path="/dashboard" component={() => <Dashboard user={user}/>} />
 								<Route exact path="/login" component={() => <Login setUser={setUser}/>} />
 								<Route exact path="/register" component={Register} />
 								<Redirect to="/" />

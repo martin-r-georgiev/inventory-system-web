@@ -123,7 +123,15 @@ input {
     }
 }
 
+/* Dashboard */
 
+.dashboard-body {
+    width: 95%;
+}
+
+.dashboard-background {
+    background-color: #f5f5fa;
+}
 
 /* Bootstrap Override */
 

@@ -136,12 +136,12 @@ const Register = () => {
                     </div>
                     <div className="col-sm-7 align-self-center">
                         <div className="card-body">
-                            <button className="btn btn-dark btn-sm mr-1" onClick={() => setShowWarehouseForm(false)}>
-                                <FontAwesomeIcon icon={faUser} style={{color: "#fff", fontSize: "20px", marginRight: "5px"}}/>
+                            <button className="btn btn-outline-dark btn-sm mr-1" onClick={() => setShowWarehouseForm(false)}>
+                                <FontAwesomeIcon icon={faUser} style={{color: "bg-dark", fontSize: "20px", marginRight: "5px"}}/>
                                 User
                             </button>
-                            <button className="btn btn-dark btn-sm ml-1" onClick={() => setShowWarehouseForm(true)}>
-                                <FontAwesomeIcon icon={faBoxes} style={{color: "#fff", fontSize: "20px", marginRight: "5px"}}/>
+                            <button className="btn btn-outline-dark btn-sm ml-1" onClick={() => setShowWarehouseForm(true)}>
+                                <FontAwesomeIcon icon={faBoxes} style={{color: "bg-dark", fontSize: "20px", marginRight: "5px"}}/>
                                 Management
                             </button>
                             <h5 className="card-title">Register</h5>

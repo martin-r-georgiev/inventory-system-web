@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
@@ -10,16 +10,8 @@ import Logo from '../../assets/images/squire-logo-inverted.webp';
 
 const Nav = ({user, setUser}) => {
 
-    let navButtons;
-
-    const handleLogout = useCallback(() => {
-        setUser(null);
-        localStorage.clear();
-    }, []);
-
-    if (user == null) {
-        console.log("I'm not logged in!");
-        navButtons = (
+    const [navButtons, setNavButtons] = useState(
+        (
             <ul className="nav navbar-nav ml-auto">
                 <li className="nav-item ml-auto">
                     <Link className="nav-link" to='/login'>Log in</Link>
@@ -28,20 +20,40 @@ const Nav = ({user, setUser}) => {
                     <Link className="nav-link" to='/register'>Register</Link>
                 </li>
             </ul>
-        );   
-    } else {
-        console.log("I'm logged in!");
-        navButtons = (
-            <ul className="nav navbar-nav ml-auto">
-                <li className="nav-item ml-auto">
-                    <Link className="nav-link" to='/dashboard'>Dashboard</Link>
-                </li>
-                <li className="nav-item ml-auto">
-                    <Link className="nav-link" onClick={handleLogout} to='/'>Log out</Link>
-                </li>
-            </ul>
-        );
-    }
+        )
+    );
+
+    const handleLogout = useCallback(() => {
+        setUser(null);
+        localStorage.clear();
+    }, [setUser]);
+
+
+    useEffect(() => {
+        if (user == null) {
+            setNavButtons((
+                <ul className="nav navbar-nav ml-auto">
+                    <li className="nav-item ml-auto">
+                        <Link className="nav-link" to='/login'>Log in</Link>
+                    </li>
+                    <li className="nav-item ml-auto">
+                        <Link className="nav-link" to='/register'>Register</Link>
+                    </li>
+                </ul>
+            ));   
+        } else {
+            setNavButtons((
+                <ul className="nav navbar-nav ml-auto">
+                    <li className="nav-item ml-auto">
+                        <Link className="nav-link" to='/dashboard'>Dashboard</Link>
+                    </li>
+                    <li className="nav-item ml-auto">
+                        <Link className="nav-link" onClick={handleLogout} to='/'>Log out</Link>
+                    </li>
+                </ul>
+            ));
+        }
+    }, [user, handleLogout]);
 
     return (
     <nav className="navbar navbar-expand-md justify-content-end">
