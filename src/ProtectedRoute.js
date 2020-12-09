@@ -2,9 +2,9 @@ import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import { isAuthenticated } from './authentication/auth.js';
 
-const ProtectedRoute = ({component: Component, user, ...rest}) => {
-    let authenticated = isAuthenticated(user);
-    
+const ProtectedRoute = ({component: Component, ...rest}) => {
+    let authenticated = isAuthenticated();
+
     return (
         <Route 
             {...rest}

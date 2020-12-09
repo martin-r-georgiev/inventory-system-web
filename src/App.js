@@ -15,7 +15,7 @@ import ScrollToTop from './js/ScrollToTop';
 
 const App = () => {
 
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState(localStorage.getItem("user"));
 	
 	const authenticateUser = useCallback(() => {
 		fetch('http://localhost:9090/inventory/users/user', {
@@ -36,20 +36,19 @@ const App = () => {
 		})
 		.then(response => {
 			if (response != null) {
-				setUser(response);
+				setUser(JSON.stringify(response));
+				localStorage.setItem("user", JSON.stringify(response));
 				localStorage.setItem("warehouseId", response.warehouseId);
 			}
 		})
 	},[]);
 
-	console.log(localStorage.getItem("token"));
-	console.log(user);
-
 	useEffect (() => {
 		if(!user) {
+			console.log("login");
 			authenticateUser();
 		}
-    }, [user, authenticateUser])
+    }, [user])
 
 	return (
 		<Router>
@@ -58,7 +57,7 @@ const App = () => {
 					<ScrollToTop>
 							<Switch>
 								<Route exact path="/" component={() => <Home user={user}/>}/>
-								<ProtectedRoute exact user={user} path="/dashboard" component={() => <Dashboard user={user}/>} />
+								<ProtectedRoute exact user={user} path="/dashboard" component={() => <Dashboard aUser={user}/>} />
 								<Route exact path="/login" component={() => <Login setUser={setUser}/>} />
 								<Route exact path="/register" component={Register} />
 								<Redirect to="/" />

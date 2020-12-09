@@ -24,12 +24,14 @@ const Nav = ({user, setUser}) => {
     );
 
     const handleLogout = useCallback(() => {
+        console.log("Logging out...");
         setUser(null);
         localStorage.clear();
-    }, [setUser]);
+    }, []);
 
 
     useEffect(() => {
+        console.log("Refreshing nav");
         if (user == null) {
             setNavButtons((
                 <ul className="nav navbar-nav ml-auto">

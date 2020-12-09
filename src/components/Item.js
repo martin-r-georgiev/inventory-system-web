@@ -2,12 +2,17 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 
-const Item = ({id, name, quantity, setShowDeleteModal, setItemId}) => {
+const Item = ({id, name, quantity, setShowDeleteModal, setShowEditModal, setItemId}) => {
+
+    const handleItemEdit = () => {
+        setItemId(id);
+        setShowEditModal(true);
+    }
 
     const handleItemDeletion = () => {
         setItemId(id);
         setShowDeleteModal(true);
-    }
+    } 
 
     return(
     <div className="card m-2">
@@ -20,7 +25,7 @@ const Item = ({id, name, quantity, setShowDeleteModal, setItemId}) => {
                     Quantity: {quantity}
                 </div>
                 <div className="col-2 col-sm-2 d-flex justify-content-end">
-                    <button className="btn btn btn-outline-info btn-sm mr-2">
+                    <button className="btn btn btn-outline-info btn-sm mr-2" onClick={handleItemEdit}>
                         <FontAwesomeIcon icon={faPencilAlt} style={{color: "bg-info", fontSize: "20px"}}/>
                     </button>
                     <button className="btn btn btn-outline-danger btn-sm" onClick={handleItemDeletion}>

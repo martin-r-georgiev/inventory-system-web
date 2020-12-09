@@ -35,8 +35,9 @@ const Login = ({setUser}) => {
                     if (authHeader && authHeader.startsWith("Bearer ")){
                         let token = authHeader.substring(7, authHeader.length);
                         localStorage.setItem('token', token);
+                        console.log("login");
                         setLoggedIn(true);
-                        setUser(null);
+                        setUser(null);            
                     } else {
                         throw Error("Invalid authentication type. Required authentication type: 'Bearer'");
                     }
@@ -51,10 +52,6 @@ const Login = ({setUser}) => {
         })
     }
 
-    if (loggedIn) {
-        return <Redirect to="/dashboard"/>;
-    }
-
     let error = '';
 
     if (message.length > 0) {
@@ -63,7 +60,8 @@ const Login = ({setUser}) => {
         )
     }
 
-    return(
+    return (
+        loggedIn ? <Redirect to="/dashboard"/> :
         <div className="container-fluid home-container page-wrapper">
         <div className="jumbotron d-flex align-items-center min-vh-100 m-0">
             <div className="card mx-auto text-center" style={{maxWidth: "540px"}}>
