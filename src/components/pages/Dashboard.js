@@ -4,10 +4,10 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Modal, Button } from 'react-bootstrap';
 
 import Item from '../Item';
+import SearchBox from '../SearchBox';
 
 const Dashboard = ({aUser}) => {
     const [items, setItems] = useState([]);
-
 
     const [itemName, setItemName] = useState('');
     const [itemQuantity, setItemQuantity] = useState('');
@@ -22,6 +22,11 @@ const Dashboard = ({aUser}) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     
     const [currentItemId, setCurrentItemId] = useState(null);
+
+    // Filters
+    const [searchFilter, setSearchFilter] = useState('');
+
+    let filteredContent = [];
 
     let user = JSON.parse(aUser);
 
@@ -128,6 +133,8 @@ const Dashboard = ({aUser}) => {
         refreshItemList();
     }, [])
 
+    filteredContent = items.filter( (item) => ( item.name.toLocaleLowerCase().indexOf(searchFilter.toLocaleLowerCase()) !== -1));
+
     return (
     <section className="page-wrapper dashboard-background">
         {/* Add item modal */}
@@ -193,6 +200,7 @@ const Dashboard = ({aUser}) => {
                 </Button>
             </Modal.Footer>
         </Modal>
+
         <p className="text-white bg-success">
                 Warehouse ID: {(!user || !("warehouseId" in user)) ? 'Empty' : user.warehouseId}<br/>
                 Role: {(!user || !("role" in user)) ? 'Empty' : user.role}
@@ -203,16 +211,20 @@ const Dashboard = ({aUser}) => {
                     Add item
             </button>
         </div>
-        <div className="row">
-            <div className="col-3 bg-dark text-white rounded">
-                Search
+        <div className="container-fluid m-2">
+            <div className="row d-flex align-items-start">
+                <div className="col-3 bg-dark text-white rounded p-1">
+                    <div className="container-fluid">
+                        <SearchBox placeholder="Search for item" searchFunc={(e) => setSearchFilter(e.target.value)}/>
+                    </div>
+                </div>
+                <div className="col-9">
+                    {
+                    filteredContent.map((item) => (<Item key={item.id} id={item.id} name={item.name} quantity={item.quantity} setShowDeleteModal={setShowDeleteModal} setShowEditModal={setShowEditModal} setItemId={setCurrentItemId}/>))
+                    }
+                </div>
             </div>
-            <div className="col-9">
-                {
-                items.map((item) => (<Item key={item.id} id={item.id} name={item.name} quantity={item.quantity} setShowDeleteModal={setShowDeleteModal} setShowEditModal={setShowEditModal} setItemId={setCurrentItemId}/>))
-                }
-            </div>
-        </div>
+        </div>  
     </section>
     );
 };
