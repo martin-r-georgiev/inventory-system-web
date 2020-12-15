@@ -131,7 +131,7 @@ const Register = () => {
         <div className="jumbotron d-flex align-items-center min-vh-100 m-0">
             <div className="card mx-auto text-center" style={{maxWidth: "540px"}}>
                 <div className="row no-gutters">
-                    <div className="col-sm-5">
+                    <div className="col-sm-5 mh-100">
                         <img src={RegisterImage} className="card-img w-100 h-100" alt="Register Form"/>
                     </div>
                     <div className="col-sm-7 align-self-center">
@@ -144,7 +144,7 @@ const Register = () => {
                                 <FontAwesomeIcon icon={faBoxes} style={{color: "bg-dark", fontSize: "20px", marginRight: "5px"}}/>
                                 Management
                             </button>
-                            <h5 className="card-title">Register</h5>
+                            <h5 className="card-title mt-2">Register</h5>
                             {error}
                             {registrationForm}
                             <div className="card-text mt-3">Already have an account? <Link to='/login'>Sign in</Link></div>

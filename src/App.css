@@ -133,6 +133,23 @@ input {
     background-color: #f5f5fa;
 }
 
+/* Search box */
+.searchbox-group {
+    box-sizing: border-box;
+}
+
+.searchbox {
+    position: absolute;
+    box-sizing: border-box;
+    padding-right: 40px;
+}
+
+.searchbox + .search-icon {
+    position: absolute;
+    right: 0;
+    padding: 8px 20px;
+}
+
 /* Bootstrap Override */
 
 .jumbotron {

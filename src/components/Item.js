@@ -1,8 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
+import {Link} from 'react-router-dom';
 
-const Item = ({id, name, quantity, setShowDeleteModal, setShowEditModal, setItemId}) => {
+const Item = ({id, whIndex, name, quantity, setShowDeleteModal, setShowEditModal, setItemId}) => {
 
     const handleItemEdit = () => {
         setItemId(id);
@@ -19,7 +20,7 @@ const Item = ({id, name, quantity, setShowDeleteModal, setShowEditModal, setItem
         <div className="card-body">
             <div className="row d-flex align-items-center justify-content-between">
                 <div className="col-4 col-sm d-flex align-items-center">
-                    <h5>{name}</h5>
+                    <Link to={`/dashboard/${whIndex}`}><h5>{name}</h5></Link>
                 </div>
                 <div className={`col-4 col-sm-3 p-2 text-white d-flex justify-content-center rounded ${quantity > 0 ? "bg-success" : "bg-danger"}`}>
                     Quantity: {quantity}

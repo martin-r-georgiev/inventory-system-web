@@ -6,7 +6,9 @@ import { Modal, Button } from 'react-bootstrap';
 import Item from '../Item';
 import SearchBox from '../SearchBox';
 
-const Dashboard = ({aUser}) => {
+import EmptyListIcon from '../../assets/svg/empty-list.svg';
+
+const Dashboard = ({user}) => {
     const [items, setItems] = useState([]);
 
     const [itemName, setItemName] = useState('');
@@ -27,8 +29,6 @@ const Dashboard = ({aUser}) => {
     const [searchFilter, setSearchFilter] = useState('');
 
     let filteredContent = [];
-
-    let user = JSON.parse(aUser);
 
     const handleAddItem = (e) => {
         e.preventDefault();
@@ -112,13 +112,19 @@ const Dashboard = ({aUser}) => {
         if (user) {
             let warehouseId = (user.warehouseId == null) ? '' : user.warehouseId;
             fetch(`http://localhost:9090/inventory/items/${warehouseId}`, {
+                method: 'GET',
                 mode: 'cors',
                 headers: new Headers({
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
                 'Accept': 'application/json',
                 }) 
             })
-            .then(res => res.json())
+            .then(res => {
+                if(res.ok) return res.json();
+                else {
+                    return [];
+                }
+            } )
             .then((data) => {
                 console.log("Retreiving item");
                 setItems(data);
@@ -205,22 +211,38 @@ const Dashboard = ({aUser}) => {
                 Warehouse ID: {(!user || !("warehouseId" in user)) ? 'Empty' : user.warehouseId}<br/>
                 Role: {(!user || !("role" in user)) ? 'Empty' : user.role}
         </p>
-        <div className="d-flex justify-content-end mr-1">
-            <button className="btn btn-outline-success btn-sm mr-1 d-flex align-items-center" onClick={() => setShowAddModal(true)}>
-                    <FontAwesomeIcon icon={faPlus} style={{color: "bg-success", fontSize: "20px", marginRight: "5px"}}/>
-                    Add item
-            </button>
+        <div className="d-flex align-middle mr-1">
+            <div className="col">
+                <SearchBox placeholder="Search for item" searchFunc={(e) => setSearchFilter(e.target.value)}/>
+            </div>
+            <div className="col d-flex justify-content-end">
+                <button className="btn btn-outline-success btn-sm mr-1 d-flex align-items-center" onClick={() => setShowAddModal(true)}>
+                        <FontAwesomeIcon icon={faPlus} style={{color: "bg-success", fontSize: "20px", marginRight: "5px"}}/>
+                        Add item
+                </button>
+            </div>
         </div>
-        <div className="container-fluid m-2">
+        <div className="container-fluid m-3">
             <div className="row d-flex align-items-start">
-                <div className="col-3 bg-dark text-white rounded p-1">
-                    <div className="container-fluid">
-                        <SearchBox placeholder="Search for item" searchFunc={(e) => setSearchFilter(e.target.value)}/>
-                    </div>
-                </div>
-                <div className="col-9">
+                <div className="col">
                     {
-                    filteredContent.map((item) => (<Item key={item.id} id={item.id} name={item.name} quantity={item.quantity} setShowDeleteModal={setShowDeleteModal} setShowEditModal={setShowEditModal} setItemId={setCurrentItemId}/>))
+                    (filteredContent.length > 0) ?
+                    filteredContent.map((item, index) => (<Item key={item.id} id={item.id} whIndex={index++} name={item.name} quantity={item.quantity} setShowDeleteModal={setShowDeleteModal} setShowEditModal={setShowEditModal} setItemId={setCurrentItemId}/>))
+                    :
+                    <div className="container-fluid">
+                        <div className="row justify-content-center mt-5">
+                            <img src={EmptyListIcon} alt="Empty List Icon" height="200px"/>
+                        </div>
+                        <div className="row justify-content-center">
+                            <h3>Empty list</h3>
+                        </div>
+                        <div className="row justify-content-center mt-2">
+                            <button className="btn btn-outline-success btn-sm d-flex align-items-center" onClick={() => setShowAddModal(true)}>
+                                <FontAwesomeIcon icon={faPlus} style={{color: "bg-success", fontSize: "20px", marginRight: "5px"}}/>
+                                Add item
+                            </button>
+                        </div>
+                    </div>
                     }
                 </div>
             </div>

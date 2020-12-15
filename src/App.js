@@ -4,14 +4,18 @@ import './App.css';
 
 // Importing components
 import ProtectedRoute from './ProtectedRoute';
+import AuthorizedRoute from './AuthorizedRoute';
 
 import Dashboard from './components/pages/Dashboard';
+import Management from './components/pages/Management';
+import Statistics from './components/pages/Statistics';
 import Home from './components/pages/Home';
 import Nav from './components/header/Nav';
 import Footer from './components/footer/Footer';
 import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import ScrollToTop from './js/ScrollToTop';
+import ItemDetailed from './components/pages/ItemDetailed';
 
 const App = () => {
 
@@ -50,14 +54,19 @@ const App = () => {
 		}
     }, [user])
 
+	var convertedUser = JSON.parse(user);
+
 	return (
 		<Router>
 			<div>
-				<Nav user={user} setUser={setUser}/>
+				<Nav user={convertedUser} setUser={setUser}/>
 					<ScrollToTop>
 							<Switch>
-								<Route exact path="/" component={() => <Home user={user}/>}/>
-								<ProtectedRoute exact user={user} path="/dashboard" component={() => <Dashboard aUser={user}/>} />
+								<Route exact path="/" component={() => <Home user={convertedUser}/>}/>
+								<ProtectedRoute exact path="/dashboard" component={() => <Dashboard user={convertedUser}/>} />
+								<ProtectedRoute exact path="/dashboard/:id" component={ItemDetailed} />
+								<ProtectedRoute exact path="/statistics" component={() => <Statistics user={convertedUser}/>} />
+								<AuthorizedRoute exact roles={["Manager", "Admin"]} path="/management" component={() => <Management user={convertedUser}/>} />
 								<Route exact path="/login" component={() => <Login setUser={setUser}/>} />
 								<Route exact path="/register" component={Register} />
 								<Redirect to="/" />

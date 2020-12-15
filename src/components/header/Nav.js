@@ -10,6 +10,8 @@ import Logo from '../../assets/images/squire-logo-inverted.webp';
 
 const Nav = ({user, setUser}) => {
 
+    var acceptedRoles = ["manager", "admin"];
+
     const [navButtons, setNavButtons] = useState(
         (
             <ul className="nav navbar-nav ml-auto">
@@ -49,6 +51,17 @@ const Nav = ({user, setUser}) => {
                     <li className="nav-item ml-auto">
                         <Link className="nav-link" to='/dashboard'>Dashboard</Link>
                     </li>
+                    { (user !== null && acceptedRoles.includes(String(user.role).toLowerCase())) ?
+                    <>
+                        <li className="nav-item ml-auto">
+                            <Link className="nav-link" to='/statistics'>Statistics</Link>
+                        </li>
+                        <li className="nav-item ml-auto">
+                            <Link className="nav-link" to='/management'>Management</Link>
+                        </li>
+                    </>
+                    : ''
+                    }
                     <li className="nav-item ml-auto">
                         <Link className="nav-link" onClick={handleLogout} to='/'>Log out</Link>
                     </li>

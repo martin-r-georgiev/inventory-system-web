@@ -20,8 +20,8 @@ const Home = ({user}) => {
     } else {
         buttons = (
             <>
-                <button type="button" className="btn btn-outline-dark btn-outline-theme" onClick={handleRegisterClick}>Get started</button>
-                <button type="button" className="btn btn-outline-dark btn-outline-theme" onClick={handleLoginClick}>Log in</button>
+                <button type="button" className="btn btn-outline-dark btn-outline-theme mr-2" onClick={handleRegisterClick}>Get started</button>
+                <button type="button" className="btn btn-outline-dark btn-outline-theme ml-2" onClick={handleLoginClick}>Log in</button>
             </>   
         )
     }
