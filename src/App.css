@@ -150,6 +150,16 @@ input {
     padding: 8px 20px;
 }
 
+/* Chat */
+
+.chatbox-message {
+    text-align: left;
+}
+
+.chatbox-username {
+    color: lightseagreen;
+}
+
 /* Bootstrap Override */
 
 .jumbotron {

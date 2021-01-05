@@ -16,6 +16,7 @@ import Login from './components/pages/Login';
 import Register from './components/pages/Register';
 import ScrollToTop from './js/ScrollToTop';
 import ItemDetailed from './components/pages/ItemDetailed';
+import ChatRoom from './components/pages/ChatRoom';
 
 const App = () => {
 
@@ -66,6 +67,7 @@ const App = () => {
 								<ProtectedRoute exact path="/dashboard" component={() => <Dashboard user={convertedUser}/>} />
 								<ProtectedRoute exact path="/dashboard/:id" component={ItemDetailed} />
 								<ProtectedRoute exact path="/statistics" component={() => <Statistics user={convertedUser}/>} />
+								<ProtectedRoute exact path="/chat" component={() => <ChatRoom user={convertedUser}/>} />
 								<AuthorizedRoute exact roles={["Manager", "Admin"]} path="/management" component={() => <Management user={convertedUser}/>} />
 								<Route exact path="/login" component={() => <Login setUser={setUser}/>} />
 								<Route exact path="/register" component={Register} />
