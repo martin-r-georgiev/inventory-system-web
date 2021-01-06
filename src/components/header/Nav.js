@@ -63,6 +63,9 @@ const Nav = ({user, setUser}) => {
                     : ''
                     }
                     <li className="nav-item ml-auto">
+                        <Link className="nav-link" to='/chat'>Chat</Link>
+                    </li>
+                    <li className="nav-item ml-auto">
                         <Link className="nav-link" onClick={handleLogout} to='/'>Log out</Link>
                     </li>
                 </ul>
