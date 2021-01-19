@@ -133,6 +133,20 @@ input {
     background-color: #f5f5fa;
 }
 
+/* Item History */
+
+.item-history {
+    margin-top: 50px;
+}
+
+.entry-quantity {
+    border-radius: 80px;
+}
+
+.entry-wrapper {
+    margin-bottom: 5px !important;
+}
+
 /* Search box */
 .searchbox-group {
     box-sizing: border-box;
@@ -148,6 +162,12 @@ input {
     position: absolute;
     right: 0;
     padding: 8px 20px;
+}
+
+/* Dashboard filters */
+
+.filter-checkbox {
+    width: auto;
 }
 
 /* Chat */

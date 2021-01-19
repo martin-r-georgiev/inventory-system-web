@@ -27,8 +27,15 @@ const Dashboard = ({user}) => {
 
     // Filters
     const [searchFilter, setSearchFilter] = useState('');
+    const [sortOption, setSortOption] = useState('');
+    const [onlyOutOfStockFilter, setOnlyOutOfStockFilter] = useState(false);
 
     let filteredContent = [];
+
+    const handleSortOptionChange = (e, value) => {
+        e.preventDefault();
+        setSortOption(value);
+    }
 
     const handleAddItem = (e) => {
         e.preventDefault();
@@ -107,7 +114,6 @@ const Dashboard = ({user}) => {
         setTimeout(() => { refreshItemList(); }, 2000);
     }, []);
 
-
     const refreshItemList = () => {
         if (user) {
             let warehouseId = (user.warehouseId == null) ? '' : user.warehouseId;
@@ -126,6 +132,7 @@ const Dashboard = ({user}) => {
                 }
             } )
             .then((data) => {
+                // BUG: User is not logged out if warehouse is not found
                 console.log("Retreiving item");
                 setItems(data);
             }).catch(err => {
@@ -139,7 +146,24 @@ const Dashboard = ({user}) => {
         refreshItemList();
     }, [])
 
-    filteredContent = items.filter( (item) => ( item.name.toLocaleLowerCase().indexOf(searchFilter.toLocaleLowerCase()) !== -1));
+    filteredContent = items.filter((item) => ( item.name.toLocaleLowerCase().indexOf(searchFilter.toLocaleLowerCase()) !== -1));
+
+    if(onlyOutOfStockFilter === true) {
+        filteredContent = filteredContent.filter((item) => (item.quantity == 0));
+    }
+
+    if(sortOption)
+    {
+        if(sortOption === "Alphabetical") { 
+            filteredContent = filteredContent.sort((a, b) => a.name.localeCompare(b.name)); 
+        }
+        if(sortOption === "Highest quantity") {
+            filteredContent = filteredContent.sort((a, b) => parseFloat(b.quantity) - parseFloat(a.quantity));
+        }
+        if(sortOption === "Lowest quantity") {
+            filteredContent = filteredContent.sort((a, b) => parseFloat(a.quantity) - parseFloat(b.quantity));
+        }
+    }
 
     return (
     <section className="page-wrapper dashboard-background">
@@ -214,6 +238,23 @@ const Dashboard = ({user}) => {
         <div className="d-flex align-middle mr-1">
             <div className="col">
                 <SearchBox placeholder="Search for item" searchFunc={(e) => setSearchFilter(e.target.value)}/>
+            </div>
+            <div className="col .d-inline-block align-middle">
+                <button type="button" className="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Sort: <b>{(sortOption) ? sortOption : "None"}</b>
+                </button>
+                <div className="dropdown-menu">
+                    <a className="dropdown-item" href='#' onClick={(e) => handleSortOptionChange(e, "Alphabetical")}>Alphabetical</a>
+                    <a className="dropdown-item" href='#' onClick={(e) => handleSortOptionChange(e, "Highest quantity")}>Highest quantity</a>
+                    <a className="dropdown-item" href='#' onClick={(e) => handleSortOptionChange(e, "Lowest quantity")}>Lowest quantity</a>
+                </div>
+            </div>
+            <div className="col">
+                <div className="form-check float-right">
+                    <input className="form-check-input filter-checkbox" type="checkbox" id="outOfStockCheckbox"
+                           checked={onlyOutOfStockFilter} onChange={() => setOnlyOutOfStockFilter(!onlyOutOfStockFilter)}/>
+                    <label className="form-check-label" htmlFor="outOfStockCheckbox">Only out-of-stock items</label>
+                </div>
             </div>
             <div className="col d-flex justify-content-end">
                 <button className="btn btn-outline-success btn-sm mr-1 d-flex align-items-center" onClick={() => setShowAddModal(true)}>
