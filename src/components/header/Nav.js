@@ -56,9 +56,9 @@ const Nav = ({user, setUser}) => {
                         <li className="nav-item ml-auto">
                             <Link className="nav-link" to='/statistics'>Statistics</Link>
                         </li>
-                        <li className="nav-item ml-auto">
+                        {/* <li className="nav-item ml-auto">
                             <Link className="nav-link" to='/management'>Management</Link>
-                        </li>
+                        </li> */}
                     </>
                     : ''
                     }

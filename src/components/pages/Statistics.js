@@ -5,8 +5,11 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const Statistics = ({user}) => {
 
-    const chart = useRef(null);
+    const totalQuantityChart = useRef(null);
+    const itemsInStockChart = useRef(null);
+
     const [dailyQuantity, setDailyQuantity] = useState([]);
+    const [itemsInStock, setItemsInStock] = useState([]);
 
     const fetchDailyQuantity = async () => {
         if (user && user.warehouseId)
@@ -25,8 +28,6 @@ const Statistics = ({user}) => {
                 }
             } )
             .then((data) => {
-                console.log("Retreiving item history");
-
                 for(var i = 0; i < data.length; i++){
                     data[i].x = new Date(data[i]['date']);
                     data[i].y = data[i]['quantity'];
@@ -36,7 +37,37 @@ const Statistics = ({user}) => {
 
                 setDailyQuantity(data);
                 console.log(data);
-                chart.current.render();
+                totalQuantityChart.current.render();
+            }).catch(err => {
+                console.error('Caught error: ', err);
+            })
+        }
+    }
+
+    const fetchItemStock = async () => {
+        if (user && user.warehouseId)
+        {
+            fetch(`http://localhost:9090/inventory/records/instock/${user.warehouseId}`, {
+                method: 'GET',
+                mode: 'cors',
+                headers: new Headers({
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                'Accept': 'application/json',
+                })
+            }).then(res => {
+                if(res.ok) return res.json();
+                else {
+                    return {};
+                }
+            } )
+            .then((data) => {
+                let chartData = [
+                    { y: (data[0].itemsInStock/(data[0].itemsOutOfStock+data[0].itemsInStock)*100), label: "Items in Stock", quantity: data[0].itemsInStock},
+                    { y: (data[0].itemsOutOfStock/(data[0].itemsOutOfStock+data[0].itemsInStock)*100), label: "Items out of Stock", quantity: data[0].itemsOutOfStock},
+                  ]
+
+                setItemsInStock(chartData);
+                itemsInStockChart.current.render();
             }).catch(err => {
                 console.error('Caught error: ', err);
             })
@@ -45,10 +76,12 @@ const Statistics = ({user}) => {
 
     useEffect(() => {
         fetchDailyQuantity();
+        fetchItemStock();
     }, [])
 
-    const options = {
+    const optionsQuantityChart = {
         animationEnabled: true,
+        backgroundColor: "transparent",
         title:{
             text: "Total Quantity in Storage (Daily)"
         },
@@ -63,30 +96,35 @@ const Statistics = ({user}) => {
             xValueFormatString: "MMMM",
             type: "spline",
             dataPoints: dailyQuantity
-            // dataPoints: [
-            //     { x: new Date(2017, 0), y: 25060 },
-            //     { x: new Date(2017, 1), y: 27980 },
-            //     { x: new Date(2017, 2), y: 42800 },
-            //     { x: new Date(2017, 3), y: 32400 },
-            //     { x: new Date(2017, 4), y: 35260 },
-            //     { x: new Date(2017, 5), y: 33900 },
-            //     { x: new Date(2017, 6), y: 40000 },
-            //     { x: new Date(2017, 7), y: 52500 },
-            //     { x: new Date(2017, 8), y: 32300 },
-            //     { x: new Date(2017, 9), y: 42000 },
-            //     { x: new Date(2017, 10), y: 37160 },
-            //     { x: new Date(2017, 11), y: 38400 }
-            // ]
         }]
     }
 
+    const optionsItemsInStock = {
+        animationEnabled: true,
+        backgroundColor: "transparent",
+        title: {
+            text: "Warehouse Item Status"
+        },
+        data: [{
+            type: "pie",
+            startAngle: 75,
+            toolTipContent: "<b>{label}</b>: {y}%",
+            showInLegend: "true",
+            legendText: "{label}",
+            indexLabelFontSize: 16,
+            indexLabel: "{label} - {quantity} ({y} %)",
+            dataPoints: itemsInStock
+        }]
+    }
 
     return(
     <div className="container-fluid home-container page-wrapper">
-        <div className="row justify-content-md-center">
+        <div className="row justify-content-md-center pt-5">
             <div className="col text-center">
-                <p>Hello, Statistics</p>
-                <CanvasJSChart key={dailyQuantity.toString()} options = {options} onRef = {ref => chart.current = ref}/>
+                <CanvasJSChart key={dailyQuantity.toString()} options = {optionsQuantityChart} onRef = {ref => totalQuantityChart.current = ref}/>
+            </div>
+            <div className="col text-center">
+                <CanvasJSChart key={itemsInStock.toString()} options = {optionsItemsInStock} onRef = {ref => itemsInStockChart.current = ref}/>
             </div>
         </div>
     </div>
