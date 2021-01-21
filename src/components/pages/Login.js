@@ -75,14 +75,14 @@ const Login = ({setUser}) => {
                             {error}
                             <form onSubmit={handleSubmit}>
                                 <div className="input-group">
-                                    <input className="input--style-3" type="text" placeholder="Username"
+                                    <input className="input--style-3" id="login-textinput-username" type="text" placeholder="Username"
                                            onChange={e => username = e.target.value}/>
                                 </div>
                                 <div className="input-group">
-                                    <input className="input--style-3" type="password" placeholder="Password"
+                                    <input className="input--style-3" id="login-textinput-password" type="password" placeholder="Password"
                                            onChange={e => password = e.target.value}/>
                                 </div>
-                                <button className="btn btn-outline-dark btn-outline-theme" type="submit">Log in</button>
+                                <button className="btn btn-outline-dark btn-outline-theme" id="login-submit" type="submit">Log in</button>
                             </form>
                             <div className="card-text mt-3">Not registered? <Link to='/register'>Create an account</Link></div>
                         </div>

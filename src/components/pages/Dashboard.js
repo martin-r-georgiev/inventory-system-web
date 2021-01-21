@@ -175,17 +175,17 @@ const Dashboard = ({user}) => {
             <form onSubmit={handleAddItem}>
             <Modal.Body>
                 <div className="input-group">
-                    <input className="input--style-3" type="text" placeholder="Name" onChange={e => setItemName(e.target.value)}/>
+                    <input className="input--style-3" id="newitem-name" type="text" placeholder="Name" onChange={e => setItemName(e.target.value)}/>
                 </div>
                 <div className="input-group">
-                    <input className="input--style-3" type="text" placeholder="Quantity" onChange={e => setItemQuantity(e.target.value)}/>
+                    <input className="input--style-3" id="newitem-quantity" type="text" placeholder="Quantity" onChange={e => setItemQuantity(e.target.value)}/>
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowAddModal(false)}>
+                <Button variant="secondary" id="newitem-cancel" onClick={() => setShowAddModal(false)}>
                     Cancel
                 </Button>
-                <Button type="submit" variant="success" onClick={() => setShowAddModal(false)}>
+                <Button type="submit" id="newitem-submit" variant="success" onClick={() => setShowAddModal(false)}>
                     Add
                 </Button>
             </Modal.Footer>
@@ -199,17 +199,17 @@ const Dashboard = ({user}) => {
             <form onSubmit={handleEditItem}>
             <Modal.Body>
                 <div className="input-group">
-                    <input className="input--style-3" type="text" placeholder="Name" onChange={e => setItemName(e.target.value)}/>
+                    <input className="input--style-3" id="edititem-name" type="text" placeholder="Name" onChange={e => setItemName(e.target.value)}/>
                 </div>
                 <div className="input-group">
-                    <input className="input--style-3" type="text" placeholder="Quantity" onChange={e => setItemQuantity(e.target.value)}/>
+                    <input className="input--style-3" id="edititem-quantity" type="text" placeholder="Quantity" onChange={e => setItemQuantity(e.target.value)}/>
                 </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowEditModal(false)}>
+                <Button variant="secondary" id="edititem-cancel" onClick={() => setShowEditModal(false)}>
                     Cancel
                 </Button>
-                <Button type="submit" variant="success" onClick={() => setShowEditModal(false)}>
+                <Button type="submit" id="edititem-submit" variant="success" onClick={() => setShowEditModal(false)}>
                     Save
                 </Button>
             </Modal.Footer>
@@ -222,10 +222,10 @@ const Dashboard = ({user}) => {
             </Modal.Header>
             <Modal.Body>Do you really want to delete this item?</Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                <Button variant="secondary" id="deleteitem-cancel" onClick={() => setShowDeleteModal(false)}>
                     Cancel
                 </Button>
-                <Button variant="danger" onClick={() => deleteItem(currentItemId)}>
+                <Button variant="danger" id="deleteitem-submit" onClick={() => deleteItem(currentItemId)}>
                     Delete
                 </Button>
             </Modal.Footer>
@@ -257,7 +257,7 @@ const Dashboard = ({user}) => {
                 </div>
             </div>
             <div className="col d-flex justify-content-end">
-                <button className="btn btn-outline-success btn-sm mr-1 d-flex align-items-center" onClick={() => setShowAddModal(true)}>
+                <button className="btn btn-outline-success btn-sm mr-1 d-flex align-items-center" id="additem-button" onClick={() => setShowAddModal(true)}>
                         <FontAwesomeIcon icon={faPlus} style={{color: "bg-success", fontSize: "20px", marginRight: "5px"}}/>
                         Add item
                 </button>

@@ -49,7 +49,7 @@ const Nav = ({user, setUser}) => {
             setNavButtons((
                 <ul className="nav navbar-nav ml-auto">
                     <li className="nav-item ml-auto">
-                        <Link className="nav-link" to='/dashboard'>Dashboard</Link>
+                        <Link className="nav-link" id="dashboard-button" to='/dashboard'>Dashboard</Link>
                     </li>
                     { (user !== null && acceptedRoles.includes(String(user.role).toLowerCase())) ?
                     <>
