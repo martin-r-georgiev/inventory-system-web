@@ -17,7 +17,7 @@ it("Renders without crashing", () => {
 });
 
 it("Renders ItemHistoryEntry component correctly", () => {
-    let timeDate = new Date(2000, 1, 1)
+    let timeDate = new Date(Date.UTC(2000, 1, 1));
     timeDate.setHours(0,0,0,0);
     let formattedTime = timeDate.toUTCString();
 
@@ -28,7 +28,7 @@ it("Renders ItemHistoryEntry component correctly", () => {
 });
 
 it("Matches snapshot", () => {
-    let timeDate = new Date(2000, 1, 1);
+    let timeDate = new Date(Date.UTC(2000, 1, 1));
     timeDate.setHours(0,0,0,0);
     const tree = renderer.create(<ItemHistoryEntry timestamp={timeDate} quantity="40" trend="up"/>).toJSON();
 
