@@ -14,7 +14,7 @@ exports[`Matches snapshot 1`] = `
       <div
         className="col-10 col-sm d-flex align-items-center"
       >
-        Fri, 22 Jan 2021 01:37:28 GMT
+        Mon, 31 Jan 2000 23:00:00 GMT
       </div>
       <div
         className="col-1 col-sm-1 p-2 text-white d-flex justify-content-center bg-success entry-quantity"

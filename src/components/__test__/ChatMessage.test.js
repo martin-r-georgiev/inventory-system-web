@@ -17,17 +17,20 @@ it("Renders without crashing", () => {
 });
 
 it("Renders ChatMessage component correctly", () => {
-    let timeNow = new Date(2000, 1, 1);
-    let formattedTime = timeNow.toLocaleTimeString();
+    let timeDate = new Date(2000, 1, 1);
+    timeDate.setHours(0,0,0,0);
+    let formattedTime = timeDate.toLocaleTimeString();
 
-    const {getByTestId} = render(<ChatMessage name="User" message="content" timestamp={timeNow}/>);
+    const {getByTestId} = render(<ChatMessage name="User" message="content" timestamp={timeDate}/>);
     expect(getByTestId('chat-message')).toHaveTextContent("User");
     expect(getByTestId('chat-message')).toHaveTextContent("content");
     expect(getByTestId('chat-message')).toHaveTextContent(formattedTime);
 });
 
 it("Matches snapshot", () => {
-    const tree = renderer.create(<ChatMessage name="User" message="content" timestamp={Date(2000, 1, 1)}/>).toJSON();
+    let timeDate = new Date(2000, 1, 1);
+    timeDate.setHours(0,0,0,0);
+    const tree = renderer.create(<ChatMessage name="User" message="content" timestamp={timeDate}/>).toJSON();
 
     expect(tree).toMatchSnapshot();
 });

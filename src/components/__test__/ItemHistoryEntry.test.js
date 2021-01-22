@@ -17,17 +17,20 @@ it("Renders without crashing", () => {
 });
 
 it("Renders ItemHistoryEntry component correctly", () => {
-    let timeNow = new Date(2000, 1, 1);
-    let formattedTime = timeNow.toUTCString();
+    let timeDate = new Date(2000, 1, 1)
+    timeDate.setHours(0,0,0,0);
+    let formattedTime = timeDate.toUTCString();
 
-    const {getByTestId} = render(<ItemHistoryEntry timestamp={timeNow} quantity="40" trend="up"/>);
+    const {getByTestId} = render(<ItemHistoryEntry timestamp={timeDate} quantity="40" trend="up"/>);
 
     expect(getByTestId('item-entry-body')).toHaveTextContent(formattedTime.toString());
     expect(getByTestId('item-entry-body')).toHaveTextContent("40");
 });
 
 it("Matches snapshot", () => {
-    const tree = renderer.create(<ItemHistoryEntry timestamp={Date(2000, 1, 1)} quantity="40" trend="up"/>).toJSON();
+    let timeDate = new Date(2000, 1, 1);
+    timeDate.setHours(0,0,0,0);
+    const tree = renderer.create(<ItemHistoryEntry timestamp={timeDate} quantity="40" trend="up"/>).toJSON();
 
     expect(tree).toMatchSnapshot();
 });
