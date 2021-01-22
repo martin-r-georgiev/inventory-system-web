@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Matches snapshot 1`] = `
+<div
+  className="chatbox-message"
+  data-testid="chat-message"
+>
+  <strong
+    className="chatbox-username"
+  >
+    User
+  </strong>
+  : 
+  <em>
+    content
+  </em>
+  <p>
+    <i>
+      12:00:00 AM
+    </i>
+  </p>
+</div>
+`;

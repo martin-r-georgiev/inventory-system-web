@@ -1,7 +1,7 @@
 import React from 'react';
 
 const ChatMessage = ({name, message, timestamp}) => {
-    let formattedTime = new Date(timestamp).toLocaleTimeString();
+    let formattedTime = new Date(timestamp).toLocaleTimeString("en-US", { timeZone: 'UTC' });
 
     return (
         <div data-testid="chat-message" className="chatbox-message">

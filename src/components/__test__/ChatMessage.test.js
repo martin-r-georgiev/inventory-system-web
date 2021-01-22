@@ -17,9 +17,8 @@ it("Renders without crashing", () => {
 });
 
 it("Renders ChatMessage component correctly", () => {
-    let timeDate = new Date(Date.UTC(2000, 1, 1));
-    timeDate.setHours(0,0,0,0);
-    let formattedTime = timeDate.toLocaleTimeString();
+    let timeDate = new Date(Date.UTC(2000, 1, 1, 0, 0, 0, 0));
+    let formattedTime = timeDate.toLocaleTimeString("en-US", { timeZone: 'UTC' });
 
     const {getByTestId} = render(<ChatMessage name="User" message="content" timestamp={timeDate}/>);
     expect(getByTestId('chat-message')).toHaveTextContent("User");
@@ -28,8 +27,7 @@ it("Renders ChatMessage component correctly", () => {
 });
 
 it("Matches snapshot", () => {
-    let timeDate = new Date(Date.UTC(2000, 1, 1));
-    timeDate.setHours(0,0,0,0);
+    let timeDate = new Date(Date.UTC(2000, 1, 1, 0, 0, 0, 0));
     const tree = renderer.create(<ChatMessage name="User" message="content" timestamp={timeDate}/>).toJSON();
 
     expect(tree).toMatchSnapshot();
