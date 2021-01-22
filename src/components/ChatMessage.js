@@ -4,10 +4,10 @@ const ChatMessage = ({name, message, timestamp}) => {
     let formattedTime = new Date(timestamp).toLocaleTimeString();
 
     return (
-        <p className="chatbox-message">
+        <div data-testid="chat-message" className="chatbox-message">
             <strong className="chatbox-username">{name}</strong>: <em>{message}</em>
             <p><i>{formattedTime}</i></p>
-        </p>
+        </div>
     );
 }
 

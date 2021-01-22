@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons'
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Item = ({id, whIndex, name, quantity, setShowDeleteModal, setShowEditModal, setItemId}) => {
 
@@ -18,7 +18,7 @@ const Item = ({id, whIndex, name, quantity, setShowDeleteModal, setShowEditModal
     return(
     <div className="card m-2">
         <div className="card-body">
-            <div className="row d-flex align-items-center justify-content-between">
+            <div data-testid="item-body" className="row d-flex align-items-center justify-content-between">
                 <div className="col-4 col-sm d-flex align-items-center">
                     <Link to={`/dashboard/${whIndex}`}><h5>{name}</h5></Link>
                 </div>

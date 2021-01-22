@@ -16,7 +16,7 @@ const ItemHistoryEntry = ({timestamp, quantity, trend}) => {
     return(
     <div className="shadow-sm p-3 mb-5 bg-white rounded entry-wrapper">
         <div className="item-history-entry">
-            <div className="row d-flex align-items-center justify-content-between">
+            <div data-testid="item-entry-body" className="row d-flex align-items-center justify-content-between">
                 <div className="col-10 col-sm d-flex align-items-center">
                     {formattedTime}
                 </div>
